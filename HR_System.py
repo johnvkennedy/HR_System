@@ -42,7 +42,7 @@ class Processor:
                 line_count += 1
                 dicRow = {"Name": row["Name"], "Address": row["Address"], "Social": row["Social"],
                           "Date of Birth": row["Date of Birth"], "Job Title": row["Job Title"],
-                          "Start Date": row["Start Date"], "End Date": row["End Date"]}
+                          "Start Date": row["Start Date"], "End Date": row["End Date"], "Reviewed": row["Reviewed"]}
                 masterList.append(dicRow)
                 line_count += 1
 
@@ -60,7 +60,7 @@ class Processor:
                 line_count += 1
                 dicRow = {"Name": row["Name"], "Address": row["Address"], "Social": row["Social"],
                           "Date of Birth": row["Date of Birth"], "Job Title": row["Job Title"],
-                          "Start Date": row["Start Date"], "End Date": row["End Date"]}
+                          "Start Date": row["Start Date"], "End Date": row["End Date"], "Reviewed": row["Reviewed"]}
                 masterList.append(dicRow)
                 line_count += 1
 
@@ -99,46 +99,49 @@ class Processor:
     # Active Persons
     @staticmethod
     def print_current_employees_in_list(whole_table):
-        print("--------------------------------------------\n"
-              "\tThese are the current Active persons sorted by SSN.\n"
-              "--------------------------------------------\n"
-              "==============")
-        print("Row - Name - Address")
+        print("\tThese are the current Active persons sorted by SSN.\n"
+              "==========================================================")
+        print("{:^18}".format("Row"), "{:^18}".format("Name"), "{:^18}".format("Address"), "{:^18}".format("SSN"),
+              "{:^18}".format("Date of Birth"), "{:^18}".format("Job Title"), "{:^18}".format("Start Date"),
+              "{:^18}".format("End Date/Active"), "{:^18}".format("Reviewed"))
         counter = 0
         for row in whole_table:
-            print(f'{counter + 1} | {row["Name"]} | {row["Address"]} | {row["Social"]} | {row["Date of Birth"]} |'
-                  f'{row["Job Title"]} | {row["Start Date"]} | {row["End Date"]} |')
+            print("{:^18}".format(counter + 1), "{:^18}".format(row["Name"]), "{:^18}".format(row["Address"]),
+                  "{:^18}".format(row["Social"]), "{:^18}".format(row["Date of Birth"]),
+                  "{:^18}".format(row["Job Title"]), "{:^18}".format(row["Start Date"]),
+                  "{:^18}".format(row["End Date"]), "{:^18}".format(row["Reviewed"]))
             counter += 1
-        print("==============")
 
     # Inactive Persons
     @staticmethod
     def print_inactive_employees_in_list(whole_table):
-        print("--------------------------------------------\n"
-              "\tThese are the current Inactive persons sorted by SSN.\n"
-              "--------------------------------------------\n"
-              "==============")
-        print("Row - Name - Address")
+        print("\tThese are the current Inactive persons sorted by SSN.\n"
+              "============================================================")
+        print("{:^18}".format("Row"), "{:^18}".format("Name"), "{:^18}".format("Address"), "{:^18}".format("SSN"),
+              "{:^18}".format("Date of Birth"), "{:^18}".format("Job Title"), "{:^18}".format("Start Date"),
+              "{:^18}".format("End Date/Active"), "{:^18}".format("Reviewed"))
         counter = 0
         for row in whole_table:
-            print(f'{counter + 1} | {row["Name"]} | {row["Address"]} | {row["Social"]} | {row["Date of Birth"]} |'
-                  f'{row["Job Title"]} | {row["Start Date"]} | {row["End Date"]} |')
+            print("{:^18}".format(counter + 1), "{:^18}".format(row["Name"]), "{:^18}".format(row["Address"]),
+                  "{:^18}".format(row["Social"]), "{:^18}".format(row["Date of Birth"]),
+                  "{:^18}".format(row["Job Title"]), "{:^18}".format(row["Start Date"]),
+                  "{:^18}".format(row["End Date"]), "{:^18}".format(row["Reviewed"]))
             counter += 1
-        print("==============")
 
     @staticmethod
     def print_master_list(big_list):
-        print("--------------------------------------------\n"
-              "\tThese are all Persons on file sorted by SSN.\n"
-              "--------------------------------------------\n"
-              "==============")
-        print("Row - Name - Address")
+        print("\tThese are all Persons on file sorted by SSN.\n"
+              "===================================================")
+        print("{:^18}".format("Row"), "{:^18}".format("Name"), "{:^18}".format("Address"), "{:^18}".format("SSN"),
+              "{:^18}".format("Date of Birth"), "{:^18}".format("Job Title"), "{:^18}".format("Start Date"),
+              "{:^18}".format("End Date/Active"), "{:^18}".format("Reviewed"))
         counter = 0
         for row in big_list:
-            print(f'{counter + 1} | {row["Name"]} | {row["Address"]} | {row["Social"]} | {row["Date of Birth"]} |'
-                  f'{row["Job Title"]} | {row["Start Date"]} | {row["End Date"]} |')
+            print("{:^18}".format(counter + 1), "{:^18}".format(row["Name"]), "{:^18}".format(row["Address"]),
+                  "{:^18}".format(row["Social"]), "{:^18}".format(row["Date of Birth"]),
+                  "{:^18}".format(row["Job Title"]), "{:^18}".format(row["Start Date"]),
+                  "{:^18}".format(row["End Date"]), "{:^18}".format(row["Reviewed"]))
             counter += 1
-        print("==============")
 
     # Adds employee
     @staticmethod
@@ -147,11 +150,16 @@ class Processor:
         name = input("Employee Name: ")
         address = input("Employee Address: ")
         social = input("Social Security Number: ")
-        dob = input("Date of Birth(MM/DD/YYYY): ")
+        dob = input("Date of Birth (YYYY/MM/DD): ")
         title = input("Job Title: ")
-        start = input("Start Date (MM/DD/YYYY): ")
-        end = input("Date Employee Left, if not applicable type -Active- (MM/DD/YYYY):")
-        new_employee = [name, address, social, dob, title, start, end]
+        start_year = input("Start Year (YYYY): ")
+        start_month = input("Start Month (MM, DON'T USE 0 AS FILLER!): ")
+        start_day = input("Start Day (DD, DON'T USE 0 AS FILLER!): ")
+        end = input("Date Employee Left, if not applicable type -Active- (YYYY-MM-DD):")
+        review = "Needs"
+        print("Reviewed column is set to Needs by default.")
+        new_employee = [name, address, social, dob, title,
+                        "{]-{}-{}".format(start_year, start_month, start_day), end, review]
         with open("employees.csv", "a") as f:
             writer = csv.writer(f)
             writer.writerow(new_employee)
@@ -177,7 +185,8 @@ class Processor:
     @staticmethod
     def save_data_to_csv_file(data_list):
         with open("employees.csv", mode="w") as csv_file:
-            fieldnames = ["Name", "Address", "Social", "Date of Birth", "Job Title", "Start Date", "End Date"]
+            fieldnames = ["Name", "Address", "Social", "Date of Birth",
+                          "Job Title", "Start Date", "End Date", "Reviewed"]
             writer = csv.DictWriter(csv_file, fieldnames=fieldnames)
 
             count = 0
@@ -187,7 +196,61 @@ class Processor:
                 count += 1
             print("The file had been updated")
 
+    # Uses formatting to extract date from list
+    @staticmethod
+    def people_that_left_last_month(big_list):
+        t_day = datetime.date.today()
+        counter = 0
+        print("Displaying persons who have left within a month\n"
+              "NOTICE: If nothing shows up it could be no one\n"
+              "         left within a month.\n")
+        print("{:^18}".format("Row"), "{:^18}".format("Name"), "{:^18}".format("Address"), "{:^18}".format("SSN"),
+              "{:^18}".format("Date of Birth"), "{:^18}".format("Job Title"), "{:^18}".format("Start Date"),
+              "{:^18}".format("End Date/Active"), "{:^18}".format("Reviewed"))
+        for i in big_list:
+            test_date = str(big_list[counter].get("End Date")).replace("-", ", ")
+            year = int(test_date[0:4])
+            month = ((test_date[5:7]).replace(" ", ""))
+            month = int(month)
+            day = ((test_date[8:11]).replace(" ", ""))
+            day = int(day)
+            total_date = datetime.date(year, month, day)
+            dif = total_date - t_day
+            dif = int(dif.days)
+            if dif >= -30:
+                print("{:^18}".format(counter + 1), "{:^18}".format(i["Name"]), "{:^18}".format(i["Address"]),
+                      "{:^18}".format(i["Social"]), "{:^18}".format(i["Date of Birth"]),
+                      "{:^18}".format(i["Job Title"]), "{:^18}".format(i["Start Date"]),
+                      "{:^18}".format(i["End Date"]), "{:^18}".format(i["Reviewed"]))
+            counter += 1
 
+    @staticmethod
+    def three_month_review(big_list):
+        t_day = datetime.date.today()
+        counter = 0
+        print("Displaying persons who haven't had \n"
+              "a review past 90 days from starting date.\n"
+              "NOTICE: If nothing shows up it could be no one\n"
+              "         needs a review.\n")
+        print("{:^18}".format("Row"), "{:^18}".format("Name"), "{:^18}".format("Address"), "{:^18}".format("SSN"),
+              "{:^18}".format("Date of Birth"), "{:^18}".format("Job Title"), "{:^18}".format("Start Date"),
+              "{:^18}".format("End Date/Active"))
+        for i in big_list:
+            test_date = str(big_list[counter].get("Start Date")).replace("-", ", ")
+            year = int(test_date[0:4])
+            month = ((test_date[5:7]).replace(" ", ""))
+            month = int(month)
+            day = ((test_date[8:11]).replace(" ", ""))
+            day = int(day)
+            total_date = datetime.date(year, month, day)
+            dif = total_date - t_day
+            dif = int(dif.days)
+            if dif <= -90 and i["End Date"] == "Active" and i["Reviewed"] == "Needs":
+                print("{:^18}".format(counter + 1), "{:^18}".format(i["Name"]), "{:^18}".format(i["Address"]),
+                      "{:^18}".format(i["Social"]), "{:^18}".format(i["Date of Birth"]),
+                      "{:^18}".format(i["Job Title"]), "{:^18}".format(i["Start Date"]),
+                      "{:^18}".format(i["End Date"]), "{:^18}".format(i["Reviewed"]))
+            counter += 1
 # Presentation
 
 
@@ -196,7 +259,7 @@ class Presentation:
     # Allows the user to choose options.
     @staticmethod
     def input_menu_choice():
-        choice = str(input("Which option would you like to perform? [1 to 5] - "))
+        choice = str(input("Which option would you like to perform? [1 to 10] - "))
         print()
         return choice
 
@@ -212,6 +275,8 @@ class Presentation:
                 4) Add Employee
                 5) Remove Employee
                 6) Save Data
+                7) Who has left with a month
+                8) Who is in Need of a 3 Month Review
                 10) Exit
                 
                 *Reminder*:
@@ -224,6 +289,7 @@ class Presentation:
 Processor.read_data_from_file_master_list()
 Processor.sort_data()
 Processor.data_sorter_by_ssn(wholeActive, wholeNot_active, masterList)
+print(datetime.date.today())
 while True:
     Presentation.print_menu_tasks()
     strChoice = Presentation.input_menu_choice()
@@ -254,6 +320,12 @@ while True:
 
     if strChoice.strip() == "6":
         Processor.save_data_to_csv_file(masterList)
+
+    if strChoice.strip() == "7":
+        Processor.people_that_left_last_month(wholeNot_active)
+
+    if strChoice.strip() == "8":
+        Processor.three_month_review(masterList)
 
     if strChoice.strip() == "10":
         print("Goodbye!")
