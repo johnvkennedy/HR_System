@@ -1,24 +1,17 @@
-name,address,ssn,date of birth,job title,start date,end date
-
-Joan,1340 Maple,555-55-5555,12/03/2000,Clerk,01/12/2020,Active
-
-Bob,1254 Oak,334-54-3344,04/30/2000,Clerk,03/21/2020,Active
-
-Fredrick,6532,736-22-7689,11/11/2000,Clerk,05/23/2020,04/24/2020
-
-Jeff,4590 Windy,333-45-6544,03/12/1994,Clerk,01/23/2020,Active
-
-Slim,4353 Road,222-22-2222,01/11/1990,Clerk,02/22/2020,Active
-
-Jessica,5433 Skyline,554-56-2345,12/03/1999,Clerk,04/01/2020,Active
-
-Hanson,2343 Roadstreet,453-63-3265,11/11/1990,Clerk,04/11/2020,Active
-
+Name,Address,Social,Date of Birth,Job Title,Start Date,End Date
+Slim,4353 Road,222-22-2222,01/11/1990,Clerk,02/22/2020,Active
 Frank,2453 Streerty,234-54-2145,05/05/1980,Clerk,03/23/2020,Active
+Hampton,2345 Jork,234-64-3464,04/04/1992,Assistant Manager,02/12/2010,Active
 Pat,2455 Yolo,234-65-7653,07/11/1980,Clerk,07/13/2020,Active
-Jason,3645 Trevor,254-46-2546,08/08/1993,Clerk,06/23/2020,Active
-Trevor,3464 Streetaveneue,456-65-2345,06/06/1992,Clerk,05/14/2020,Active
-Hampton,2345 Jork,234-64-3464,04/04/1992,Assistant Manager,02/12/2010,Active
-
 Dan,4354 Girrafe,236-67-6542,04/30/1990,Clerk,09/09/2020,Active
-Stan,4576 York,453-63-7646,04/20/1993,Clerk,10/10/2020,Active
+Jason,3645 Trevor,254-46-2546,08/08/1993,Clerk,06/23/2020,Active
+Jeffery,2345 Hood,265-45-3453,09/09/1992,Clerk,04/01/2020,Active
+Jeff,4590 Windy,333-45-6544,03/12/1994,Clerk,01/23/2020,Active
+Bob,1254 Oak,334-54-3344,04/30/2000,Clerk,03/21/2020,Active
+Heelen,1234 Street,343-23-6745,02/02/1991,Clerk,01/02/2020,Active
+Sharon,6575 Pulit,435-76-2345,04/04/1990,Clerk,02/07/2020,Active
+Hanson,2343 Roadstreet,453-63-3265,11/11/1990,Clerk,04/11/2020,Active
+Trevor,3464 Streetaveneue,456-65-2345,06/06/1992,Clerk,05/14/2020,Active
+Jessica,5433 Skyline,554-56-2345,12/03/1999,Clerk,04/01/2020,Active
+Joan,1340 Maple,555-55-5555,12/03/2000,Clerk,01/12/2020,Active
+Troy,6577 Yope,654-65-2345,03/03/1995,Assistant Store Manager,02/05/2018,Active
