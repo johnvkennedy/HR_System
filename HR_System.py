@@ -24,6 +24,9 @@ dicRow = {}
 wholeActive = []
 wholeNot_active = []
 txtData = []
+ssn_data = ""
+count = 0
+checked_ssn = None
 
 
 # Processing
@@ -150,16 +153,17 @@ class Processor:
         name = input("Employee Name: ")
         address = input("Employee Address: ")
         social = input("Social Security Number: ")
-        dob = input("Date of Birth (YYYY/MM/DD): ")
+        dob = input("Date of Birth (YYYY-MM-DD)\n"
+                    "EX: 1990-02-01: ")
         title = input("Job Title: ")
         start_year = input("Start Year (YYYY): ")
-        start_month = input("Start Month (MM, DON'T USE 0 AS FILLER!): ")
-        start_day = input("Start Day (DD, DON'T USE 0 AS FILLER!): ")
+        start_month = input("Start Month (MM, NEEDS 0 AS PLACEHOLDER!): ")
+        start_day = input("Start Day (DD, NEEDS 0 AS PLACEHOLDER!): ")
         end = input("Date Employee Left, if not applicable type -Active- (YYYY-MM-DD):")
         review = "Needs"
         print("Reviewed column is set to Needs by default.")
         new_employee = [name, address, social, dob, title,
-                        "{]-{}-{}".format(start_year, start_month, start_day), end, review]
+                        "{}-{}-{}".format(start_year, start_month, start_day), end, review]
         with open("employees.csv", "a") as f:
             writer = csv.writer(f)
             writer.writerow(new_employee)
@@ -208,21 +212,27 @@ class Processor:
               "{:^18}".format("Date of Birth"), "{:^18}".format("Job Title"), "{:^18}".format("Start Date"),
               "{:^18}".format("End Date/Active"), "{:^18}".format("Reviewed"))
         for i in big_list:
-            test_date = str(big_list[counter].get("End Date")).replace("-", ", ")
-            year = int(test_date[0:4])
-            month = ((test_date[5:7]).replace(" ", ""))
-            month = int(month)
-            day = ((test_date[8:11]).replace(" ", ""))
-            day = int(day)
-            total_date = datetime.date(year, month, day)
-            dif = total_date - t_day
-            dif = int(dif.days)
-            if dif >= -30:
-                print("{:^18}".format(counter + 1), "{:^18}".format(i["Name"]), "{:^18}".format(i["Address"]),
-                      "{:^18}".format(i["Social"]), "{:^18}".format(i["Date of Birth"]),
-                      "{:^18}".format(i["Job Title"]), "{:^18}".format(i["Start Date"]),
-                      "{:^18}".format(i["End Date"]), "{:^18}".format(i["Reviewed"]))
-            counter += 1
+            try:
+                test_date = str(big_list[counter].get("End Date")).replace("-", ",")
+                year = int(test_date[0:4])
+                month = ((test_date[5:7]).replace(" ", ""))
+                month = int(month)
+                day = ((test_date[8:11]).replace(" ", ""))
+                day = int(day)
+                total_date = datetime.date(year, month, day)
+                dif = total_date - t_day
+                dif = int(dif.days)
+                if dif >= -30:
+                    print("{:^18}".format(counter + 1), "{:^18}".format(i["Name"]), "{:^18}".format(i["Address"]),
+                          "{:^18}".format(i["Social"]), "{:^18}".format(i["Date of Birth"]),
+                          "{:^18}".format(i["Job Title"]), "{:^18}".format(i["Start Date"]),
+                          "{:^18}".format(i["End Date"]), "{:^18}".format(i["Reviewed"]))
+                counter += 1
+            except ValueError:
+                print("Value Error Occurred: Check the End Date column to see if\n"
+                      "there is a date with no placeholder.\n"
+                      "EX: 1990-01-01 = Works\n"
+                      "EX: 1990-1-1 = Doesn't Work, Causes Error")
 
     @staticmethod
     def three_month_review(big_list):
@@ -236,21 +246,95 @@ class Processor:
               "{:^18}".format("Date of Birth"), "{:^18}".format("Job Title"), "{:^18}".format("Start Date"),
               "{:^18}".format("End Date/Active"))
         for i in big_list:
-            test_date = str(big_list[counter].get("Start Date")).replace("-", ", ")
-            year = int(test_date[0:4])
-            month = ((test_date[5:7]).replace(" ", ""))
-            month = int(month)
-            day = ((test_date[8:11]).replace(" ", ""))
-            day = int(day)
-            total_date = datetime.date(year, month, day)
-            dif = total_date - t_day
-            dif = int(dif.days)
-            if dif <= -90 and i["End Date"] == "Active" and i["Reviewed"] == "Needs":
-                print("{:^18}".format(counter + 1), "{:^18}".format(i["Name"]), "{:^18}".format(i["Address"]),
-                      "{:^18}".format(i["Social"]), "{:^18}".format(i["Date of Birth"]),
-                      "{:^18}".format(i["Job Title"]), "{:^18}".format(i["Start Date"]),
-                      "{:^18}".format(i["End Date"]), "{:^18}".format(i["Reviewed"]))
-            counter += 1
+            try:
+                test_date = str(big_list[counter].get("Start Date")).replace("-", ",")
+                year = int(test_date[0:4])
+                month = ((test_date[5:7]).replace(" ", ""))
+                month = int(month)
+                day = ((test_date[8:11]).replace(" ", ""))
+                day = int(day)
+                total_date = datetime.date(year, month, day)
+                dif = total_date - t_day
+                dif = int(dif.days)
+                if dif <= -90 and i["End Date"] == "Active" and i["Reviewed"] == "Needs":
+                    print("{:^18}".format(counter + 1), "{:^18}".format(i["Name"]), "{:^18}".format(i["Address"]),
+                          "{:^18}".format(i["Social"]), "{:^18}".format(i["Date of Birth"]),
+                          "{:^18}".format(i["Job Title"]), "{:^18}".format(i["Start Date"]),
+                          "{:^18}".format(i["End Date"]), "{:^18}".format(i["Reviewed"]))
+                counter += 1
+            except ValueError:
+                print("Value Error Occurred: Check the Start Date column to see if\n"
+                      "there is a date with no placeholder.\n"
+                      "EX: 1990-01-01 = Works\n"
+                      "EX: 1990-1-1 = Doesn't Work, Causes Error")
+
+    @staticmethod
+    def capture_ssn(ssn):
+        try:
+            global ssn_data
+            ssn_data = str(input(ssn))
+        except AttributeError:
+            print("Please enter a SSN")
+
+    @staticmethod
+    def run_ssn_through_list(picked_ssn):
+        global count
+        while count < int(len(masterList) - 1):
+            if picked_ssn.lower() == "back":
+                print("You've Been Brought Back to Menu")
+                count = 0
+                break
+            while picked_ssn != masterList[count].get('Social'):
+                count += 1
+                if count > len(masterList) - 1:
+                    break
+            try:
+                print("You are accessing", masterList[count].get('Social'), masterList[count].get("Name"))
+                global checked_ssn
+                checked_ssn = picked_ssn
+                break
+            except IndexError:
+                print("An error has occurred",
+                      ssn_data, "is not a SSN in the data set")
+                break
+
+    @staticmethod
+    def change_review():
+        global count
+        try:
+            print(masterList[count].get("Name"), "has a review status of", masterList[count].get("Reviewed"),
+                  "\nWould you like to change it to Finished if it's in the Needs status\n"
+                  "or to the Needs status if it is currently Finished?")
+            choice = input("Yes or No?: ")
+            choice = choice.strip().lower()
+            if choice == "yes":
+                if masterList[count].get("Reviewed") == "Needs":
+                    try:
+                        masterList[count].update({"Reviewed": "Finished"})
+                        count = 0
+                        Processor.save_data_to_csv_file(masterList)
+                    except AttributeError:
+                        print("Error had occurred")
+                        count = 0
+                if masterList[count].get("Reviewed") == "Finished":
+                    try:
+                        masterList[count].update({"Reviewed": "Needs"})
+                        count = 0
+                        Processor.save_data_to_csv_file(masterList)
+                    except AttributeError:
+                        print("Error had occurred")
+                        count = 0
+            if choice == "no":
+                count = 0
+        except IndexError:
+            count = 0
+
+    @staticmethod
+    def reset_ssn_data():
+        global ssn_data
+        ssn_data = ""
+
+
 # Presentation
 
 
@@ -277,6 +361,7 @@ class Presentation:
                 6) Save Data
                 7) Who has left with a month
                 8) Who is in Need of a 3 Month Review
+                9) Change Review Status
                 10) Exit
                 
                 *Reminder*:
@@ -284,12 +369,25 @@ class Presentation:
                 in the "employees.csv file       
                 """)
 
+    @staticmethod
+    def today_date():
+        print("Today's Date Is:", datetime.date.today())
+
+    @staticmethod
+    def choose_ssn():
+        print("Please enter the SSN of the person you'd\n"
+              "like to change the status of.\n"
+              "If it doesn't exist you'll be returned\n"
+              "to the menu.\n"
+              "EX: 111-11-1111\n"
+              "It needs those lines in-between.")
+
 
 # Main Script Body
 Processor.read_data_from_file_master_list()
 Processor.sort_data()
 Processor.data_sorter_by_ssn(wholeActive, wholeNot_active, masterList)
-print(datetime.date.today())
+Presentation.today_date()
 while True:
     Presentation.print_menu_tasks()
     strChoice = Presentation.input_menu_choice()
@@ -326,6 +424,14 @@ while True:
 
     if strChoice.strip() == "8":
         Processor.three_month_review(masterList)
+
+    if strChoice.strip() == "9":
+        Processor.print_master_list(masterList)
+        Presentation.choose_ssn()
+        Processor.capture_ssn(ssn_data)
+        Processor.run_ssn_through_list(ssn_data)
+        Processor.change_review()
+        Processor.reset_ssn_data()
 
     if strChoice.strip() == "10":
         print("Goodbye!")
